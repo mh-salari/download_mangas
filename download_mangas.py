@@ -49,7 +49,9 @@ def download_mangas(manga_rss_url):
 
             save_path = os.path.join(base_path, "temp", os.path.basename(chapter_url))
 
-            if os.path.join(save_path, f"{os.path.basename(save_path)}.pdf"):
+            if not os.path.exists(
+                os.path.join(save_path, f"{os.path.basename(save_path)}.pdf")
+            ):
 
                 print(f"Gettin list of {os.path.basename(chapter_url)} images")
                 images_url = get_url_of_images(chapter_url)
