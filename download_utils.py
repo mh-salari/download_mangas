@@ -28,32 +28,9 @@ def get_list_of_chapters(manga_rss_url):
 
     chapters_list = []
 
-    try:
-        r = requests.get(manga_rss_url)
-    except Exception as e:
-        print(e)
-
-    soup = BeautifulSoup(r.content, features="xml")
-
-    chapters = soup.findAll("item")
-
-    for a in chapters:
-        title = a.find("title").text
-        link = a.find("link").text
-        published_date = a.find("pubDate").text
-        chapter = {"title": title, "link": link, "published_date": published_date}
-        chapters_list.append(chapter)
-    return chapters_list
-
-
-def get_list_of_chapters(manga_rss_url):
-
-    chapters_list = []
-
-    try:
-        r = requests.get(manga_rss_url)
-    except Exception as e:
-        print(e)
+    r = requests.get(manga_rss_url)
+    if r.status_code != 200:
+        raise Exception(f"request error{r.status_code}")
 
     soup = BeautifulSoup(r.content, features="xml")
 
