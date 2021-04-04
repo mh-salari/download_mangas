@@ -44,9 +44,9 @@ def download_mangas(manga_rss_url):
     if new_chapters:
         for chapter_url in new_chapters:
 
-            save_path = os.path.join(base_path, "temp", os.path.basename(chapter_url))
-
             chapter_url = chapter_url.replace("-page-1.html", "")
+
+            save_path = os.path.join(base_path, "temp", os.path.basename(chapter_url))
 
             if os.path.join(save_path, f"{os.path.basename(save_path)}.pdf"):
 
@@ -56,7 +56,7 @@ def download_mangas(manga_rss_url):
                 print(f"Downloading {os.path.basename(chapter_url)} images")
                 url_and_images = download_images(images_url)
 
-                print(f"Saveing chapter to {save_path}")
+                print(f"Saveing chapter to {os.path.basename(save_path)}.pdf")
                 save_manga(save_path, url_and_images, save_png=False, save_pdf=True)
 
                 print(f"Download {os.path.basename(chapter_url)} Finished!")
