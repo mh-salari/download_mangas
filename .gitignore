@@ -3,4 +3,4 @@ config.py
 geckodriver.log
 __pycache__/
 data/
-
+*.save

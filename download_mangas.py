@@ -22,7 +22,7 @@ client = TelegramClient(session_path, api_id, api_hash)
 @retry(delay=15, backoff=2, tries=5)
 def download_mangas(manga_rss_url):
     manga_name = os.path.basename(manga_rss_url)[:-4]
-    manga_chapters_path = os.path.join(base_path, "chapters_url", f"{manga_name}.txt")
+    manga_chapters_path = os.path.join(base_path, f"{manga_name}.txt")
     chapters_url_on_disk = []
     if os.path.exists(manga_chapters_path):
         print(f'Loadding list of "{manga_name}" chapters from disk')
