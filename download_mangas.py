@@ -59,6 +59,7 @@ def download_mangas(manga_rss_url):
                 print(f"Saveing chapter to {os.path.basename(save_path)}.pdf")
                 save_manga(save_path, url_and_images, save_png=False, save_pdf=True)
 
+                url_and_images.clear()
                 print(f"Download {os.path.basename(chapter_url)} Finished!")
     else:
         print("Notting new to download!")
