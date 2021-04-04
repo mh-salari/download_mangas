@@ -19,16 +19,19 @@ session_path = os.path.join(base_path, "manga.session")
 client = TelegramClient(session_path, api_id, api_hash)
 
 
-@retry(delay=15, backoff=2, tries=5)
+@retry(delay=0.5, backoff=2, tries=5)
 def download_mangas(manga_rss_url):
 
+    if not os.path.exists(chapters_path):
+        os.makedirs(chapters_path)
+
     manga_name = os.path.basename(manga_rss_url)[:-4]
-    manga_chapters_path = os.path.join(base_path, "chapters_url", f"{manga_name}.txt")
+    manga_chapter_path = os.path.join(base_path, "chapters_url", f"{manga_name}.txt")
     chapters_url_on_disk = []
 
-    if os.path.exists(manga_chapters_path):
+    if os.path.exists(manga_chapter_path):
         print(f'Loadding list of "{manga_name}" chapters from disk')
-        with open(manga_chapters_path, "r") as f:
+        with open(manga_chapter_path, "r") as f:
             chapters_url_on_disk = [line.rstrip("\n") for line in f]
 
     print(f'Getting list of "{manga_name}" chapters from mangasee123.com')
@@ -56,7 +59,7 @@ def download_mangas(manga_rss_url):
     else:
         print("Notting new to download!")
 
-    with open(manga_chapters_path, "w") as f:
+    with open(manga_chapter_path, "w") as f:
         [f.write(chapter + "\n") for chapter in chapters_url]
     print("-" * 50)
 
