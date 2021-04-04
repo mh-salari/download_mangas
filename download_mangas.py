@@ -22,7 +22,7 @@ client = TelegramClient(session_path, api_id, api_hash)
 @retry(delay=15, backoff=2, tries=5)
 def download_mangas(manga_rss_url):
     manga_name = os.path.basename(manga_rss_url)[:-4]
-    manga_chapters_path = os.path.join(base_path, f"{manga_name}.txt")
+    manga_chapters_path = os.path.join(base_path, "chapters_url", f"{manga_name}.txt")
     chapters_url_on_disk = []
     if os.path.exists(manga_chapters_path):
         print(f'Loadding list of "{manga_name}" chapters from disk')
@@ -61,9 +61,11 @@ def download_mangas(manga_rss_url):
 
 async def main():
 
-    mangas_rss_url_path = os.path.join(base_path, "mangas_rss_url.txt")
+    mangas_rss_url_path = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), "mangas_rss_url.txt"
+    )
     if not os.path.exists(mangas_rss_url_path):
-        raise Exception("mangas_rss_url.txt doesn't exist!")
+        raise Exception(f"{mangas_rss_url_path} doesn't exist!")
 
     with open(mangas_rss_url_path, "r") as f:
         mangas_rss_url = [line.rstrip("\n") for line in f]
