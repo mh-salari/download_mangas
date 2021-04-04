@@ -96,6 +96,7 @@ async def main():
             mangas_pdf.append(os.path.join(dirpath, filename))
 
     if mangas_pdf:
+        mangas_pdf.sort()
         print("Sending PDF to my telegram account")
     for pdf in tqdm(mangas_pdf):
 
