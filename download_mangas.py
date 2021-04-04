@@ -40,7 +40,8 @@ def download_mangas(manga_rss_url):
     if chapters_url_on_disk == []:
         new_chapters = [chapters_url[0]]
     else:
-        new_chapters = set(chapters_url) - set(chapters_url_on_disk)
+        new_chapters = list(set(chapters_url) - set(chapters_url_on_disk))
+        new_chapters.sort()
     if new_chapters:
         for chapter_url in new_chapters:
 
