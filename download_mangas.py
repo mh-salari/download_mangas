@@ -43,19 +43,23 @@ def download_mangas(manga_rss_url):
         new_chapters = set(chapters_url) - set(chapters_url_on_disk)
     if new_chapters:
         for chapter_url in new_chapters:
-            chapter_url = chapter_url.replace("-page-1.html", "")
-
-            print(f"Gettin list of {os.path.basename(chapter_url)} images")
-            images_url = get_url_of_images(chapter_url)
-
-            print(f"Downloading {os.path.basename(chapter_url)} images")
-            url_and_images = download_images(images_url)
 
             save_path = os.path.join(base_path, "temp", os.path.basename(chapter_url))
-            print(f"Saveing chapter to {save_path}")
-            save_manga(save_path, url_and_images, save_png=False, save_pdf=True)
 
-            print(f"Download {os.path.basename(chapter_url)} Finished!")
+            chapter_url = chapter_url.replace("-page-1.html", "")
+
+            if os.path.join(save_path, f"{os.path.basename(save_path)}.pdf"):
+
+                print(f"Gettin list of {os.path.basename(chapter_url)} images")
+                images_url = get_url_of_images(chapter_url)
+
+                print(f"Downloading {os.path.basename(chapter_url)} images")
+                url_and_images = download_images(images_url)
+
+                print(f"Saveing chapter to {save_path}")
+                save_manga(save_path, url_and_images, save_png=False, save_pdf=True)
+
+                print(f"Download {os.path.basename(chapter_url)} Finished!")
     else:
         print("Notting new to download!")
 
@@ -96,6 +100,7 @@ async def main():
         )
 
         await client.send_file("mh_salari", pdf)
+        os.remove(pdf)
 
 
 if __name__ == "__main__":
